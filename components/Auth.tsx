@@ -7,6 +7,8 @@ import SmartAccount from '@biconomy/smart-account';
 import { css } from '@emotion/css';
 import Counter from './Counter';
 
+import { IDKitWidget, solidityEncode, internal } from '@worldcoin/idkit'
+
 
 export default function Auth() {
   const [smartAccount, setSmartAccount] = useState<SmartAccount | null>(null);
@@ -106,6 +108,35 @@ export default function Auth() {
   }
 
 
+  async function onSuccess(response) {
+    console.log('response', response)
+
+    console.log("enter the concert")
+
+    // const worldTicketAddress = "0x1c3aDb05b8a51ec6D941cC266E72a62964D94bC2";
+
+    // const worldTicketContract = new ethers.Contract(worldTicketAddress, EthSeoulABI.abi, signer);
+
+    // const contractWithSigner = worldTicketContract.connect(signer)
+
+    // const unpackedProof = ethers.utils.defaultAbiCoder.decode(['uint256[8]'], response.proof)[0]
+    // const decodedMerkleRoot = decode("uint256", response.merkle_root)
+    // const decodedNullifierHash = decode("uint256", response.nullifier_hash)
+
+    // const gasEstimated = await worldTicketContract.estimateGas.mint(account.address, decodedMerkleRoot, decodedNullifierHash, unpackedProof, account.address)
+    // console.log("gasEstimated", gasEstimated)
+
+    // const tx = await contractWithSigner.mint(account.address, decodedMerkleRoot, decodedNullifierHash, unpackedProof, account.address, { gasLimit: "1000000" })
+    // const rc = await tx.wait()
+
+    // console.log(tx);
+    // console.log(rc);
+
+
+
+  }
+
+
 
   return (
     <div className={containerStyle}>
@@ -122,6 +153,30 @@ export default function Auth() {
           <button className={buttonStyle} onClick={test}>console.log smart account</button>
         </div>
       }
+
+      <div className={buttonWrapperStyle}>
+
+
+        <IDKitWidget
+          app_id="app_staging_24e942c5a9e13eaba62ff6917dfaab6b" // obtained from the Developer Portal
+          action="human" // this is your action identifier from the Developer Portal (can also be created on the fly)
+          signal={smartAccount?.address} // any arbitrary value the user is committing to, e.g. for a voting app this could be the vote
+          onSuccess={onSuccess}
+          credential_types={['orb']} // the credentials you want to accept
+          // walletConnectProjectId="get_this_from_walletconnect_portal" // optional, obtain from WalletConnect Portal
+          enableTelemetry
+        >
+          {({ open }) => <button
+            className={buttonStyle}
+            onClick={open}
+
+          >
+            Verify as a human
+          </button>}
+        </IDKitWidget>
+
+      </div>
+
 
       {!!smartAccount && <Counter smartAccount={smartAccount} provider={provider} />}
 
@@ -158,8 +213,7 @@ export default function Auth() {
         )
       }
 
-      
-   
+
     </div>
   )
 }
