@@ -1,6 +1,16 @@
-also check this,
+# Biconomy Social Login ,Paymaster + WorldID
 
-https://github.com/Rahat-ch/biconomy-sdk-social-gasless-starter
+A problem with Biconomy Social Login is that a user (Farmer) can create multiple wallet addresses with Biconomy using different Social Logins (for example, Google Login, Facebook Login).
+
+To prevent this, we can use WorldID to ensure one person has only one account.
+
+After successfully verifying personhood with WorldApp, it responds with a nullifier_hash, which serves as the user's unique identifier.
+
+With this nullifier_hash, we can check if the user has any other accounts.
+
+
+
+
 
 <H1>BICONOMY SCW AUTHENTICATION DEMO</H1>
 
@@ -11,6 +21,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Getting Started
 
 First, run the development server:
+
+also check this, to set up .env
+
+https://github.com/Rahat-ch/biconomy-sdk-social-gasless-starter
 
 ```bash
 npm install 
